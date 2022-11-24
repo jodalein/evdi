@@ -6,14 +6,12 @@
  * This file is subject to the terms and conditions of the GNU General Public
  * License v2. See the file COPYING in the main directory of this archive for
  * more details.
+ *
+ * 
  */
 
 #include <linux/sched.h>
 #include <linux/version.h>
-#if KERNEL_VERSION(5, 18, 0) <= LINUX_VERSION_CODE
-#elif KERNEL_VERSION(5, 11, 0) <= LINUX_VERSION_CODE
-#include <linux/dma-buf-map.h>
-#endif
 #if KERNEL_VERSION(5, 16, 0) <= LINUX_VERSION_CODE || defined(EL9)
 #include <drm/drm_prime.h>
 #include <drm/drm_file.h>
@@ -291,7 +289,7 @@ int evdi_gem_vmap(struct evdi_gem_object *obj)
 	int ret;
 
 	if (evdi_drm_gem_object_use_import_attach(&obj->base)) {
-#if KERNEL_VERSION(5, 18, 0) <= LINUX_VERSION_CODE
+#if KERNEL_VERSION(5, 14, 0) <= LINUX_VERSION_CODE
 		struct iosys_map map = IOSYS_MAP_INIT_VADDR(NULL);
 #elif KERNEL_VERSION(5, 11, 0) <= LINUX_VERSION_CODE || defined(EL8)
 		struct dma_buf_map map = DMA_BUF_MAP_INIT_VADDR(NULL);
@@ -324,7 +322,7 @@ int evdi_gem_vmap(struct evdi_gem_object *obj)
 void evdi_gem_vunmap(struct evdi_gem_object *obj)
 {
 	if (evdi_drm_gem_object_use_import_attach(&obj->base)) {
-#if KERNEL_VERSION(5, 18, 0) <= LINUX_VERSION_CODE
+#if KERNEL_VERSION(5, 14, 0) <= LINUX_VERSION_CODE
 		struct iosys_map map = IOSYS_MAP_INIT_VADDR(NULL);
 
 		if (obj->vmap_is_iomem)
