@@ -27,7 +27,7 @@
 #endif
 #if KERNEL_VERSION(5, 15, 0) <= LINUX_VERSION_CODE || defined(EL9)
 #include <drm/drm_framebuffer.h>
-#else
+#elif LINUX_VERSION_CODE <= KERNEL_VERSION (4, 18, 0-425) & defined(EL8)
 #include <drm/drm_irq.h>
 #endif
 #include <drm/drm_crtc.h>
